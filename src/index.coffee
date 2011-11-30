@@ -1,7 +1,7 @@
 # # csvjs
 # simple csv parser with header row expected
 
-module.exports = 
+module.exports =
   DEFAULT_OPTIONS: { col_sep: ",", row_sep: "\n", keys: null }
   # parse csv data and return each row as a pojso
   # params
@@ -12,10 +12,10 @@ module.exports =
   #
   # callback returns (err, row)
   #
-  parse: (data, options={}, cb) ->
+  parse: (data, options={}, cb, ready) ->
     if typeof(options) == 'function'
       cb = options
-      options = {} 
+      options = {}
 
     return cb('error no data') unless data?
 
@@ -33,6 +33,8 @@ module.exports =
       row = row.replace /\r$/, ''
       values = @_split row, options.col_sep
       cb(null, @_merge(keys, values))
+    # be ready when ready
+    ready?()
   
   # ## private methods
   #
