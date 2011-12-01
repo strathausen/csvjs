@@ -14,6 +14,7 @@ module.exports =
   #
   parse: (data, options={}, cb, ready) ->
     if typeof(options) == 'function'
+      ready = cb
       cb = options
       options = {}
 
@@ -33,6 +34,7 @@ module.exports =
       row = row.replace /\r$/, ''
       values = @_split row, options.col_sep
       cb(null, @_merge(keys, values))
+
     # be ready when ready
     ready?()
   
