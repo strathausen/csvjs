@@ -28,15 +28,21 @@ module.exports =
 
     # get headers
     keys = @_split rows.shift(), options.col_sep unless options.keys?
+    
+    # the final table as returned by the ready function
+    results = []
+
     # return each row
     for row, c in rows
       # remove cr if present
       row = row.replace /\r$/, ''
       values = @_split row, options.col_sep
-      cb(null, @_merge(keys, values))
+      result = @_merge keys, values
+      results.push result
+      cb null, result
 
     # be ready when ready
-    ready?()
+    ready? results
   
   # ## private methods
   #
